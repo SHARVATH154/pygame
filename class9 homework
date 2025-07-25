@@ -1,0 +1,66 @@
+import pygame
+pygame.init()
+
+screen = pygame.display.set_mode((600, 400))
+pygame.display.set_caption("Text Example")
+
+
+running = True
+while running:
+    screen.fill((255, 255, 255))  # White background
+
+    # Default Font, Black
+    font1 = pygame.font.SysFont(None, 50)
+    text1 = font1.render("Default Font - Black",False, (0, 0, 0))
+    screen.blit(text1, (50, 50))
+
+    # Comic Sans Font, Red
+    font2 = pygame.font.SysFont('pythonprogram', 70)
+    text2 = font2.render("python program", True,
+(255, 0, 0))
+    screen.blit(text2, (50, 150))
+
+    # Arial Font, Blue, smaller size
+    font3 = pygame.font.SysFont('sharvath', 30)
+    text3 = font3.render("sharvathl", True, (0, 0, 255))
+    screen.blit(text3, (50, 250))
+ 
+
+pygame.init()
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Countdown Example")
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+font = pygame.font.Font(None, 100) # Choose a font and size
+countdown_time = 3 # Start the countdown from 3 seconds
+start_time = pygame.time.get_ticks() # Get the current time in milliseconds
+running = True
+countdown_active = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    if countdown_active:
+        elapsed_time = (pygame.time.get_ticks() - start_time) / 1000 # Convert to seconds
+        remaining_time = countdown_time - int(elapsed_time)
+
+        if remaining_time >= 0:
+            screen.fill(BLACK) # Clear the screen
+            countdown_text = font.render(str(remaining_time), True, WHITE)
+            text_rect = countdown_text.get_rect(center=(screen_width // 2, screen_height // 2))
+            screen.blit(countdown_text, text_rect)
+        else:
+            countdown_active = False # End the countdown
+            # Add your game's starting logic here
+            print("Game Start!")
+pygame.display.flip()
+pygame.display.update()
+
+
+for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+pygame.quit()
