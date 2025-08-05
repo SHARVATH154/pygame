@@ -1,0 +1,3 @@
+#Handle events -> Chceck for user input, mouse clicks, key presses etc
+#Update game state -> Change positions,scores,timers etc
+#Draw screen-> Redraw everything with the updated state
