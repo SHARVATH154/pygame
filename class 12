@@ -1,0 +1,27 @@
+import pygame
+pygame.init()
+screen = pygame.display.set_mode((600,400,))
+pygame.display.set_caption("bruh game")
+clock = pygame.time.Clock()
+x,y = 100,100
+radius = 35
+color = (0,255,0)
+speed_x = 3
+speed_y = 4
+running = True
+while running:
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+  x += speed_x
+  y += speed_y
+  if x - radius <= 0 or x + radius >= 600:
+    speed_x *= -1
+    
+  if y - radius <= 0 or y + radius >= 400:
+      speed_y *= -1
+  screen.fill((255,255,0))
+  pygame.draw.circle(screen,color,(x,y),radius)
+  pygame.display.update()
+  clock.tick(60)
+pygame.quit()
