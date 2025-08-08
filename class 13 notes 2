@@ -9,13 +9,17 @@ while running:
   pygame.draw.rect(screen,(210,180,140),(200,200,200,100))
   pygame.draw.polygon(screen,(165,42,42),[(200,200),(300,120),(400,200)])
   pygame.draw.circle(screen,(255,255,0),(80,80),40)
-  pygame.draw.line(screen,(0,0,0),(450,200),(450,120),5)
+  pygame.draw.line(screen,(0,0,0),(300,200),(300,60),5)
   pygame.draw.polygon(screen,(255,0,0),[(450,120),(480,135),(450,150)])
   pygame.draw.rect(screen,(255,0,0),(280,270,40,60))
   pygame.draw.circle(screen,(0,0,0),(315,310),5)
   pygame.draw.rect(screen,(173,216,230),(220,230,40,40))
   pygame.draw.line(screen,(0,0,0),(240,230),(240,270),2)
   pygame.draw.line(screen,(0,0,0),(220,250),(260,250),2)
+  pygame.draw.rect(screen,(139,69,39),(500,230,20,70))
+  pygame.draw.circle(screen,(0,128,0),(510,200),40)
+  pygame.draw.circle(screen,(0,128,0),(480,210),30)
+  pygame.draw.circle(screen,(0,128,0),(540,210),30)
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       running = False
