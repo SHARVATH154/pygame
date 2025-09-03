@@ -1,0 +1,28 @@
+import turtle
+import random
+screen = turtle.Screen()
+screen.title("turtle race")
+screen.bgcolor("lightgreen")
+line = turtle.Turtle()
+line.penup()
+line.goto(200,150)
+line.pendown()
+line.right(90)
+line.fd(300)
+colors = ["red","blue","orange","yellow","purple"]
+turltes = []
+y_pos = 100
+for color in colors:
+  t = turtle.Turtle()
+  t.color(color)
+  t.penup()
+  t.goto(-200,y_pos)
+  y_pos -= 50
+  turltes.append(t)
+race_on = True
+while race_on:
+  for t in turltes:
+    t.fd(random.randint(1,10))
+    if t.xcor()>=200:
+      race_on = False
+      print(f"{t.pencolor().title()} turtle wins")
