@@ -1,0 +1,24 @@
+import pygame
+pygame.init()
+screen = pygame.display.set_mode((800,600))
+pygame.display.set_caption("my home ")
+purple = (128,0,128)
+red = (255,0,0)
+blue = (0,0,255)
+green = (0,255,0)
+black = (0,0,0)
+white = (255,255,255)
+marineblue = (63,150,255)
+cyan = (0,255,255)
+yellow = (255,255,0)
+running = True
+while running:
+  screen.fill(white)
+  pygame.draw.rect(screen,cyan,(0,0,800,400))
+  pygame.draw.rect(screen,green,(0,400,800,300))
+  pygame.draw.circle(screen,black,(700,100),50)
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+  pygame.display.update()
+pygame.quit()
