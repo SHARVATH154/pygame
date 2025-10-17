@@ -1,0 +1,26 @@
+import pygame
+pygame.init()
+Screen = pygame.display.set_mode((800,600))
+pygame.display.set_caption("snake game")
+square_size = 50
+x,y = (500,300)
+speed = 5
+running = True
+while running:
+  keys = pygame.key.get_pressed()
+  if keys[pygame.K_LEFT]:
+    x -= speed
+  if keys[pygame.K_RIGHT]:
+    x += speed
+  if keys[pygame.K_UP]:
+    y -= speed
+  if keys[pygame.K_DOWN]:
+    y += speed
+  Screen.fill((255,255,255))
+  pygame.draw.rect(Screen,(0,255,0),(100,100,50,50))
+  for event in pygame.event.get():
+ 
+     if event.type == pygame.QUIT:
+      running = False
+  pygame.display.update()
+pygame.quit()
