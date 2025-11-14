@@ -20,9 +20,9 @@ def draw_paper(x,y):
   pygame.draw.rect(window,(255,255,255),(x-50,y-50,100,100))
   pygame.draw.rect(window,(0,0,0),(x-50,y-50,100,100),3)
 def draw_scissors(x,y):
-  pygame.draw.rect(window,(0,0,0),(x-50,y-50,25,25))
-  pygame.draw.rect(window,(0,0,0),(x+25,y-50,25,25))
-  pygame.draw.circle(window,(255,0,0),(x,y),1)
+  pygame.draw.line(window,(0,0,0),(x-30,y-30),(x+30,y+30),4)
+  pygame.draw.line(window,(0,0,0),(x+30,y-30),(x-30,y+30),4)
+  pygame.draw.circle(window,(255,0,0),(x,y),8)
 running = True
 while running:
   window.fill((255,255,255))
@@ -45,6 +45,8 @@ while running:
 
 
   for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+       running = False
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_r:
         player = "rock"
@@ -58,14 +60,12 @@ while running:
         computer = random.choice(choices)
         if player == computer:
           result = "it a draw"
-        elif (player == "rock" and computer == "scissors") or (player == "paper" and computer == "rock") or (player == "scissors" and computer == "paper")
+        elif (player == "rock" and computer == "scissors") or (player == "paper" and computer == "rock") or (player == "scissors" and computer == "paper"):
           result = " congragulations you have won the round"
-      else:
-        result = "sorry you lost better luck next time"
+        else:
+           result = "sorry you lost better luck next time"
         
           
 
-      if event.type == pygame.QUIT:
-           running = False
   pygame.display.update()
 pygame.quit()
