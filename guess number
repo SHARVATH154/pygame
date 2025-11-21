@@ -1,0 +1,49 @@
+import pygame
+import random
+pygame.init()
+
+screen = pygame.display.set_mode((500, 200))
+pygame.display.set_caption("Simple Input")
+
+font = pygame.font.Font(None, 40)
+text = ""   # stores typed text
+number_to_guess = random.randint(1,100)
+
+
+running = True
+while running:
+    screen.fill((255, 255, 255))# white background
+    
+
+    
+    guess = font.render("Type something:", True, (0, 0, 0))
+    screen.blit(guess, (20, 20))
+    
+
+    
+    typed = font.render(text, True, (0, 0, 200))
+    screen.blit(typed, (20, 80))
+    if text.isdigit():
+        guess = int(text)
+    if guess < number_to_guess:
+        hint = font.render("too low",True,(0,0,0))
+        screen.blit(hint,(20,120))
+    elif guess > number_to_guess:
+        hint = font.render("too high",True,(0,0,0))
+        screen.blit(hint,(20,120))
+    else:
+        hint = font.render("correct",True,(0,0,0))
+        
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                text = text[:-1]  # delete last char
+            else:
+                text += event.unicode  # add typed char
+
+    pygame.display.update()
+
+pygame.quit()
