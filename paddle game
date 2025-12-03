@@ -1,0 +1,75 @@
+import pygame
+import sys
+pygame.init()
+WIDTH, HEIGHT = 800, 600
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Brick Breaker - Event Based")
+WHITE = (255, 255, 255)
+BLUE = (50, 150, 255)
+GREEN = (0, 255, 0)
+RED = (255, 80, 80)
+BLACK = (0, 0, 0)
+paddle_width = 120
+paddle_height = 15
+paddle_x = WIDTH // 2  - paddle_width // 2
+paddle_y = HEIGHT - 40
+paddle_speed = 7
+paddle_change = 0 
+ball_x = WIDTH // 2
+ball_y = HEIGHT // 2
+ball_radius = 12
+ball_dx = 4
+ball_dy = -4
+bricks = []
+brick_rows = 5
+brick_cols = 10
+brick_width = 70
+brick_height = 25
+for row in range(brick_rows):
+    for col in range(brick_cols):
+        brick_x = col * (brick_width + 10) + 35
+        brick_y = row * (brick_height + 10) + 50
+        bricks.append(pygame.Rect(brick_x, brick_y, brick_width, brick_height))
+print (bricks)
+
+clock = pygame.time.Clock()
+running = True
+while running:
+    if ball_x <= ball_radius or ball_x >= WIDTH - ball_radius:
+        ball_dx = -ball_dx
+    if ball_y <= ball_radius:
+        ball_dy = -ball_dy
+    if paddle_x < 0:
+        paddle_x = 0
+    if paddle_x > WIDTH - paddle_width:
+        paddle_x = WIDTH - paddle_width
+    if ball_x <= paddle_x:
+        ball_dx = -ball_dx
+    if (paddle_y <= ball_y + ball_radius <= paddle_y + paddle_height) and \
+       (paddle_x <= ball_x <= paddle_x + paddle_width):
+        ball_dy = -ball_dy
+    window.fill(BLACK)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+           
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                paddle_change = -paddle_speed
+            if event.key == pygame.K_RIGHT:
+                paddle_change = paddle_speed
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                paddle_change = 0
+    ball_x += ball_dx
+    ball_y += ball_dy
+    
+
+    paddle_x += paddle_change
+    for i in bricks:
+        pygame.draw.rect(window,GREEN,i)
+    pygame.draw.rect(window, BLUE, (paddle_x, paddle_y, paddle_width, paddle_height))
+    pygame.draw.circle(window, WHITE, (ball_x, ball_y), ball_radius)
+    pygame.display.update()
+    clock.tick(60)
+pygame.quit()
