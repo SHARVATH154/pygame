@@ -1,0 +1,65 @@
+import pygame
+import random
+pygame.init()
+width,height = 800,800
+window = pygame.display.set_mode((width,height))
+pygame.display.set_caption("memory match game")
+values = ["A","A","B","B","C","C","D","D",]
+random.shuffle(values)
+cards = []
+font = pygame.font.Font(None,50)
+
+for i in range(8):
+  rect = pygame.Rect(100 + (i % 4)* 110,100 + (i // 4) * 150,100,140)
+  cards.append({"rect":rect,"value":values[i],"revealed":False,"matched":False})
+first_card = None
+Second_card = None
+timer = 0
+pairs_found = 0 
+running  = True
+while running:
+  window.fill((240,240,240))
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      for c in cards:
+        if c["rect"].collidepoint(event.pos):
+          if not c["revealed"] and not c["matched"]:
+             c["revealed"] = True
+             if first_card is None:
+               first_card = c
+             elif Second_card is None:
+               Second_card = c
+               timer = pygame.time.get_ticks()
+  if first_card and Second_card:
+    if pygame.time.get_ticks() - timer > 700:
+      if first_card["value"] == Second_card["value"]:
+        first_card["matched"] = True
+        Second_card["matched"] = True
+        pairs_found += 1
+      else:
+        first_card["revealed"] = False
+        Second_card["revealed"] = False
+    first_card = None
+    Second_card = None
+  for c in cards:
+    if c["matched"]:
+      pygame.draw.rect(window,(0,255,0),c["rect"])
+    elif c["revealed"]:
+      pygame.draw.rect(window,(255,255,255),c["rect"])
+      text = font.render(c["value"],True,(0,0,0))
+      window.blit(text,(c["rect"].x + 40,c["rect"].y + 50))
+    else:
+      pygame.draw.rect(window,(100,100,255),c["rect"])
+      
+             
+               
+        
+  pygame.display.update()
+  if pairs_found == 4:
+    win = font.render("you win",True,(0,255,0))
+    window.blit(win,(190,30))
+  pygame.display.update()
+  
+pygame.quit()
