@@ -1,0 +1,48 @@
+import pygame
+import random
+pygame.init()
+width,height = 800,800
+window = pygame.display.set_mode((width,height))
+pygame.display.set_caption("campaign")
+BLACK = (0,0,0)
+BROWN = (77,38,0)
+running = True
+font = pygame.font.Font(None,150)
+def draw_text(text,x,y, color=BROWN):
+   img =  font.render(text,True,color)
+   window.blit(img,(x,y))
+stars = []
+for i in range(25):
+  x = random.randint(0,800)
+  y = random.randint(0,400)
+  size = random.randint(1,3)
+  stars.append([x,y,size])
+def draw_moon(a,b):
+  pygame.draw.circle(window,(255,255,200),(a,b),50)
+  pygame.draw.circle(window,(10,10,60),(a+20,b-10),40)
+def draw_stars():
+  for star in stars:
+    x,y,size = star
+    pygame.draw.circle(window,(180,200,255),(x,y),size)
+clock = pygame.time.Clock()
+pygame.draw.polygon
+    
+while running:
+  window.fill((255,255,255))
+  pygame.draw.rect(window,(0,128,0),(0,550,800,400))
+  pygame.draw.rect(window,(0,26,77),((0,0,800,550)))
+  pygame.draw.circle(window,(140,140,140),(425,585),13)
+  pygame.draw.circle(window,(140,140,140),(460,550),13)
+  pygame.draw.circle(window,(140,140,140),(470,610),13)
+  #pond
+  pygame.draw.ellipse(window,(0,0,255),(50,600,350,150))
+  draw_text("X",400,640)
+  draw_moon(100,100)
+  draw_stars()
+  
+  for event  in pygame.event.get():
+     if event.type == pygame.QUIT:
+       running = False
+  pygame.display.update()
+  
+pygame.quit()
