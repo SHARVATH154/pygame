@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 WIDTH, HEIGHT = 600, 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -125,10 +126,6 @@ obstacle_y = 30
 obstacle_height = 100
 obstacle_width = 50
 obstacle_speed = 3
-obstacle_tier1 = 100
-obstacle_tier2 = 200
-obstacle_tier3 = 300
-obstacle_tier4 = 400
 
 def draw_obstacle(x,y):
     pygame.draw.rect(screen,(0,255,0),(obstacle_x,obstacle_y,obstacle_width,obstacle_height))
@@ -137,12 +134,15 @@ def draw_obstacle(x,y):
     pygame.draw.circle(screen,(0,0,0,),(obstacle_x+10,obstacle_y+90),8)
     pygame.draw.circle(screen,(0,0,0,),(obstacle_x+40,obstacle_y+90),8)
     pygame.draw.rect(screen,(0,0,0),(obstacle_x+10,obstacle_y+20,30,60))
-    
+  
+
+        
+
 def draw_score():
     font = pygame.font.Font(None, 36)
     score_text = font.render(f"Score: {score}", True, WHITE)
     screen.blit(score_text, (10, 10))
-    
+
 def draw_gameover():
     font_big = pygame.font.Font(None, 72)
     game_over_text = font_big.render("GAME OVER", True, RED)
@@ -158,47 +158,50 @@ def check_collision():
     player_rect = pygame.Rect(car_x, car_y, car_width, car_height)
     obstacle_rect = pygame.Rect(obstacle_x, obstacle_y, obstacle_width, obstacle_height)
     return player_rect.colliderect(obstacle_rect)
-    
+
 # Main game loop
 while running:
-      # Green grass background
+  if obstacle_y > HEIGHT:
+    obstacle_y = -100
+    obstacle_x = random.randint(road_x + 10, road_x + road_width - obstacle_width - 10)
+    screen.fill((34,139,34))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    if not game_over:
+        keys = pygame.key.get_pressed()
 
-    keys = pygame.key.get_pressed()
+        # Movement
+        if keys[pygame.K_LEFT]:
+            car_x -= speed
+        if keys[pygame.K_RIGHT]:
+            car_x += speed
+        if keys[pygame.K_UP]:
+            car_y -= speed
+        if keys[pygame.K_DOWN]:    
+            car_y += speed
 
-    # Movement
-    if keys[pygame.K_LEFT]:
-        car_x -= speed
-    if keys[pygame.K_RIGHT]:
-        car_x += speed
-    if keys[pygame.K_UP]:
-        car_y -= speed
-    if keys[pygame.K_DOWN]:    
-        car_y += speed
-                                                                                                  
-    # Stay inside road limits
-    if car_x < road_x + 10:
-        car_x = road_x + 10
-    if car_x > road_x + road_width - car_width - 10:
-        car_x = road_x + road_width - car_width - 10
-    if car_y < 0:
-        car_y = 0
-    if car_y > HEIGHT - car_height - 10:
-        car_y = HEIGHT - car_height - 10
-    obstacle_y += obstacle_speed
-    if obstacle_y > HEIGHT:
-        obstacle_y = -100
-        score += 1
-    if check_collision():
-        game_over = True
-    # Draw everything in order (back to front)
+        # Stay inside road limits
+        if car_x < road_x + 10:
+            car_x = road_x + 10
+        if car_x > road_x + road_width - car_width - 10:
+            car_x = road_x + road_width - car_width - 10
+        if car_y < 0:
+            car_y = 0
+        if car_y > HEIGHT - car_height - 10:
+            car_y = HEIGHT - car_height - 10
+
+        # Move obstacle
+        obstacle_y += obstacle_speed
+        if obstacle_y > HEIGHT:
+            obstacle_y = -100
+            score += 1
+
+        # Check collision
+        if check_collision():
+            game_over = True
     draw_road()
-    # Draw traffic signs on the roadside
-    draw_stop_sign(30, 50)           # Left side, top
-    draw_speed_limit_sign(520, 150, "50")  # Right side, middle
-    draw_arrow_sign(35, 250)         # Left side, bottom
+    draw_stop_sign(30,50)
     draw_speed_limit_sign(520, 10, "30")   # Right side, top
     draw_car(car_x, car_y)
     draw_obstacle(obstacle_x,obstacle_y)
@@ -209,3 +212,4 @@ while running:
     pygame.display.update()
     clock.tick(60)
 pygame.quit()
+  
