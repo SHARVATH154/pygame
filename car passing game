@@ -134,6 +134,7 @@ def draw_obstacle(x,y):
     pygame.draw.circle(screen,(0,0,0,),(obstacle_x+10,obstacle_y+90),8)
     pygame.draw.circle(screen,(0,0,0,),(obstacle_x+40,obstacle_y+90),8)
     pygame.draw.rect(screen,(0,0,0),(obstacle_x+10,obstacle_y+20,30,60))
+
   
 
         
@@ -161,9 +162,7 @@ def check_collision():
 
 # Main game loop
 while running:
-  if obstacle_y > HEIGHT:
-    obstacle_y = -100
-    obstacle_x = random.randint(road_x + 10, road_x + road_width - obstacle_width - 10)
+
     screen.fill((34,139,34))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -193,6 +192,9 @@ while running:
 
         # Move obstacle
         obstacle_y += obstacle_speed
+        if obstacle_y > HEIGHT:
+           obstacle_y = -100
+           obstacle_x = random.randint(road_x + 10, road_x + road_width - obstacle_width - 10)
         if obstacle_y > HEIGHT:
             obstacle_y = -100
             score += 1
