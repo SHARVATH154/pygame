@@ -21,6 +21,7 @@ car_width = 60
 car_height = 120
 speed = 5
 score = 0
+obstacle_speed = 3
 # Road details
 road_width = 300
 road_x = (WIDTH - road_width) // 2  # Center the road
@@ -195,10 +196,9 @@ while running:
         if obstacle_y > HEIGHT:
            obstacle_y = -100
            obstacle_x = random.randint(road_x + 10, road_x + road_width - obstacle_width - 10)
-        if obstacle_y > HEIGHT:
-            obstacle_y = -100
-            score += 1
-
+           score += 1
+           obstacle_speed += 0.5
+       
         # Check collision
         if check_collision():
             game_over = True
