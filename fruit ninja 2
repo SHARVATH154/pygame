@@ -1,0 +1,60 @@
+
+import pygame
+import random
+pygame.init()
+Screen = pygame.display.set_mode((800,600))
+pygame.display.set_caption("fruit ninja game")
+WHITE = (255,255,255)
+BLACK = (0,0,0)
+RED = (255,0,0)
+GREEN = (0,255,0)
+YELLOW = (255,255,0)
+ORANGE = (255,165,0)
+PURPLE = (200,0,200)
+BROWN = (139,69,19)
+SKY_BLUE = (135,206,235)
+
+score = 0
+missed = 0
+max_missed = 0
+game_over = False
+fruits = []
+spawn_timer = 0
+spawn_delay = 60
+mouse_trail = []
+
+font = pygame.font.Font(None,36)
+def draw_text(text,x,y):
+  img = font.render(text,True,(0,0,0))
+  Screen.blit(img,(x,y))
+def spawn_fruit():
+  fruit = {
+    "x" : random.randint(50, 800 - 50),
+    "y" :  620, 
+    "vx" : random.uniform(-3,3),
+    "vy" : random.uniform(-15,-10),
+    "color" : random.choice([RED,PURPLE,ORANGE,YELLOW,BROWN,GREEN]),
+    "radius" : random.randint(25,35),
+    "sliced" : False
+  }
+  fruits.append(fruit)
+def draw_fruit(fruit):
+    if not fruit["sliced"]:
+       pygame.draw.circle(Screen,fruit["color"],(int(fruit["x"]),int(fruit["y"])),fruit["radius"])
+       pygame.draw.circle(Screen,WHITE,(int(fruit["x"] - 5),int(fruit["y"] - 5)),fruit["radius"]//4)
+       pygame.draw.rect(Screen,BROWN,(int(fruit["x"]-3),int(fruit["y"]- fruit["radius"] - 10),6,10))
+
+
+
+running = True
+while running:
+  Screen.fill(SKY_BLUE)
+  draw_text("score: ",10,10)
+  draw_text("missed fruit:",10,50)
+  for fruit in fruits:
+      draw_fruit(fruit)
+
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+  pygame.display.update()
