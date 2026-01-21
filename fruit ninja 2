@@ -2,6 +2,7 @@
 import pygame
 import random
 pygame.init()
+WIDTH, HEIGHT = 800, 600
 Screen = pygame.display.set_mode((800,600))
 pygame.display.set_caption("fruit ninja game")
 WHITE = (255,255,255)
@@ -27,25 +28,36 @@ font = pygame.font.Font(None,36)
 def draw_text(text,x,y):
   img = font.render(text,True,(0,0,0))
   Screen.blit(img,(x,y))
+# def spawn_fruit():
+#   fruit = {
+#     "x" : random.randint(50, 800 - 50),
+#     "y" :  620, 
+#     "vx" : random.uniform(-3,3),
+#     "vy" : random.uniform(-15,-10),
+#     "color" : random.choice([RED,PURPLE,ORANGE,YELLOW,BROWN,GREEN]),
+#     "radius" : random.randint(25,35),
+#     "sliced" : False
+#   }
+#   fruits.append(fruit)
 def spawn_fruit():
-  fruit = {
-    "x" : random.randint(50, 800 - 50),
-    "y" :  620, 
-    "vx" : random.uniform(-3,3),
-    "vy" : random.uniform(-15,-10),
-    "color" : random.choice([RED,PURPLE,ORANGE,YELLOW,BROWN,GREEN]),
-    "radius" : random.randint(25,35),
-    "sliced" : False
-  }
-  fruits.append(fruit)
+    fruit = {
+        "x": WIDTH // 2,
+        "y": HEIGHT // 2,
+        "color": random.choice([RED, GREEN, ORANGE, YELLOW, PURPLE]),
+        "radius": 35,
+        "sliced": False
+    }
+    fruits.append(fruit)
 def draw_fruit(fruit):
     if not fruit["sliced"]:
        pygame.draw.circle(Screen,fruit["color"],(int(fruit["x"]),int(fruit["y"])),fruit["radius"])
        pygame.draw.circle(Screen,WHITE,(int(fruit["x"] - 5),int(fruit["y"] - 5)),fruit["radius"]//4)
        pygame.draw.rect(Screen,BROWN,(int(fruit["x"]-3),int(fruit["y"]- fruit["radius"] - 10),6,10))
+       pygame.draw.ellipse(Screen,BLACK,(int(fruit["x"]-10),int(fruit["y"]-fruit["radius"]-15),20,10))
+       
 
 
-
+spawn_fruit()
 running = True
 while running:
   Screen.fill(SKY_BLUE)
@@ -58,3 +70,4 @@ while running:
     if event.type == pygame.QUIT:
       running = False
   pygame.display.update()
+  
